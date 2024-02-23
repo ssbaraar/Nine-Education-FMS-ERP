@@ -1,0 +1,697 @@
+openapi: 3.0.1
+info:
+  title: School Management System API
+  description: "APIs for managing branches, employees, students, receipts, etc."
+  contact:
+    email: tejabhargavpodila@gmail.com
+  license:
+    name: Your License
+  version: 1.0.0
+servers:
+- url: http://localhost:5000/v1
+tags:
+- name: authorization
+  description: Operations related to authorization
+- name: branches
+  description: Operations related to branches
+- name: employees
+  description: Operations related to employees
+- name: students
+  description: Operations related to students
+- name: receipts
+  description: Operations related to receipts
+- name: db
+  description: Operations related to database
+paths:
+  /login:
+    post:
+      tags:
+      - authorization
+      summary: Login
+      description: Login to the system.
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "401":
+          description: Unauthorized access error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-openapi-router-controller: swagger_server.controllers.authorization_controller
+  /send_password:
+    post:
+      tags:
+      - authorization
+      summary: Send password
+      description: Send password.
+      operationId: send_password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendPasswordRequest'
+        required: true
+      responses:
+        "200":
+          description: password sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "401":
+          description: Unauthorized access error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-openapi-router-controller: swagger_server.controllers.authorization_controller
+  /send_mail:
+    post:
+      tags:
+      - authorization
+      summary: Send mail
+      description: Send mail.
+      operationId: send_mail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailRequest'
+        required: true
+      responses:
+        "200":
+          description: mail sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "401":
+          description: Unauthorized access error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-openapi-router-controller: swagger_server.controllers.authorization_controller
+  /branches:
+    post:
+      tags:
+      - branches
+      summary: Create a new branch
+      description: Add a new branch to the system.
+      operationId: branches_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Branch'
+        required: true
+      responses:
+        "201":
+          description: Branch created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Branch'
+        "401":
+          description: Unauthorized access error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Unauthorized
+                code: 401
+        "404":
+          description: Resource not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Resource not found
+                code: 404
+      x-openapi-router-controller: swagger_server.controllers.branches_controller
+  /employees:
+    post:
+      tags:
+      - employees
+      summary: Create a new employee
+      description: Add a new employee to the system.
+      operationId: employees_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+        required: true
+      responses:
+        "201":
+          description: Employee created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        "401":
+          description: Unauthorized access error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Unauthorized
+                code: 401
+        "404":
+          description: Resource not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Resource not found
+                code: 404
+      x-openapi-router-controller: swagger_server.controllers.employees_controller
+  /students:
+    post:
+      tags:
+      - students
+      summary: Create a new student
+      description: Add a new student to the system.
+      operationId: students_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+        required: true
+      responses:
+        "201":
+          description: Student created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        "401":
+          description: Unauthorized access error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Unauthorized
+                code: 401
+        "404":
+          description: Resource not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Resource not found
+                code: 404
+      x-openapi-router-controller: swagger_server.controllers.students_controller
+  /db/get:
+    post:
+      tags:
+      - db
+      summary: Retrieve all data from database
+      description: Get a list of all data from database.
+      operationId: db_get
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DbGetRequest'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "401":
+          description: Unauthorized access error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Unauthorized
+                code: 401
+        "404":
+          description: Resource not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Resource not found
+                code: 404
+      x-openapi-router-controller: swagger_server.controllers.db_controller
+  /db/get_excel:
+    post:
+      tags:
+      - db
+      summary: Retrieve all data from database
+      description: Get a list of all data from database.
+      operationId: get_excel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DbGetRequest'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "401":
+          description: Unauthorized access error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Unauthorized
+                code: 401
+        "404":
+          description: Resource not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Resource not found
+                code: 404
+      x-openapi-router-controller: swagger_server.controllers.db_controller
+  /db/update:
+    post:
+      tags:
+      - db
+      summary: Update data in database
+      description: Update data in database.
+      operationId: db_update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DbUpdateRequest'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "401":
+          description: Unauthorized access error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Unauthorized
+                code: 401
+        "404":
+          description: Resource not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Resource not found
+                code: 404
+      x-openapi-router-controller: swagger_server.controllers.db_controller
+  /receipt/create:
+    post:
+      tags:
+      - receipts
+      summary: Create a new receipt
+      description: Add a new receipt to the system.
+      operationId: receipts_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReceiptCreateRequest'
+        required: true
+      responses:
+        "201":
+          description: Receipt created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        "401":
+          description: Unauthorized access error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Unauthorized
+                code: 401
+        "404":
+          description: Resource not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Resource not found
+                code: 404
+      x-openapi-router-controller: swagger_server.controllers.receipts_controller
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    SendEmailRequest:
+      type: object
+      properties:
+        subject:
+          type: string
+        message:
+          type: string
+    Branch:
+      type: object
+      properties:
+        branchName:
+          type: string
+        branchCode:
+          type: string
+        branchAddress:
+          type: string
+      example:
+        branchName: branchName
+        branchCode: branchCode
+        branchAddress: branchAddress
+    Employee:
+      type: object
+      properties:
+        employeeName:
+          type: string
+        role:
+          type: string
+          enum:
+            - Manager
+            - Accountant
+            - Executive
+            - Director
+        branch:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        phoneNumber:
+          type: string
+    Student:
+      type: object
+      properties:
+        applicationNumber:
+          type: string
+        dateOfJoining:
+          type: string
+        course:
+          type: string
+        firstName:
+          type: string
+        surName:
+          type: string
+        parentName:
+          type: string
+        gender:
+          type: string
+          enum:
+            - Male
+            - Female
+        batch:
+          type: string
+        branch:
+          type: string
+        yearOfJoining:
+          type: string
+        modeOfResidence:
+          type: string
+        primaryContact:
+          type: string
+        secondaryContact:
+          type: string
+        firstYearHostelFee:
+          type: number
+        firstYearTuitionFee:
+          type: number
+        secondYearHostelFee:
+          type: number
+        secondYearTuitionFee:
+          type: number
+        pendingFirstYearTuitionFee:
+          type: number
+        pendingFirstYearHostelFee:
+          type: number
+        pendingSecondYearTuitionFee:
+          type: number
+        pendingSecondYearHostelFee:
+          type: number
+        paidFirstYearTuitionFee:
+          type: number
+        paidFirstYearHostelFee:
+          type: number
+        paidSecondYearTuitionFee:
+          type: number
+        paidSecondYearHostelFee:
+          type: number
+        studentStatus:
+          type: string
+          enum:
+            - Active
+            - Cancelled
+    Receipt:
+      type: object
+      properties:
+        receiptNumber:
+          type: string
+        dateOfPayment:
+          type: string
+        dateISO:
+          type: string
+        studentName:
+          type: string
+        parentName:
+          type: string
+        applicationNumber:
+          type: string
+        registeredMobileNumber:
+          type: string
+        batch:
+          type: string
+        dateOfJoining:
+          type: string
+        stream:
+          type: string
+        gender:
+          type: string
+          enum:
+            - Male
+            - Female
+        branch:
+          type: string
+        residenceType:
+          type: string
+        firstYearTuitionFeePayable:
+          type: number
+        firstYearTuitionFeePaid:
+          type: number
+        firstYearHostelFeePayable:
+          type: number
+        firstYearHostelFeePaid:
+          type: number
+        secondYearTuitionFeePayable:
+          type: number
+        secondYearTuitionFeePaid:
+          type: number
+        secondYearHostelFeePayable:
+          type: number
+        secondYearHostelFeePaid:
+          type: number
+        firstYearTotalTuitionFeePaid:
+          type: number
+        firstYearTotalTuitionFeePending:
+          type: number
+        firstYearTotalHostelFeePaid:
+          type: number
+        firstYearTotalHostelFeePending:
+          type: number
+        secondYearTotalTuitionFeePaid:
+          type: number
+        secondYearTotalTuitionFeePending:
+          type: number
+        secondYearTotalHostelFeePaid:
+          type: number
+        secondYearTotalHostelFeePending:
+          type: number
+        modeOfPayment:
+          type: string
+        chequeNumber:
+          type: string
+        studentStatus:
+          type: string
+          enum:
+            - Active
+            - Cancelled
+    ReceiptCreateRequest:
+      type: object
+      properties:
+        applicationNumber:
+          type: string
+        feeType: 
+          type: string
+          enum:
+          - firstYearTuitionFee
+          - firstYearHostelFee
+          - secondYearTuitionFee
+          - secondYearHostelFee
+        amount:
+          type: number
+        modeOfPayment:
+          type: string
+        chequeNumber:
+          type: string
+        dateOfPayment:
+          type: string
+    AddConcessionRequest:
+      type: object
+      properties:
+        applicationNumber:
+          type: string
+        feeType: 
+          type: string
+          enum:
+          - firstYearTuitionFee
+          - firstYearHostelFee
+          - secondYearTuitionFee
+          - secondYearHostelFee
+        amount:
+          type: number
+        modeOfPayment:
+          type: string
+    Response:
+      type: object
+      properties:
+        data:
+          type: object
+        message:
+          type: string
+        error:
+          type: string
+    SendPasswordRequest:
+      type: object
+      properties:
+        email:
+          type: string 
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        details:
+          type: string
+    DbGetRequest:
+      type: object
+      properties:
+        collectionName:
+          type: string
+        query:
+          type: object
+        type:
+          type: string
+          enum:
+          - findOne
+          - findMany
+    DbUpdateRequest:
+      type: object
+      properties:
+        collectionName:
+          type: string
+        query:
+          type: object
+        update:
+          type: object
+        type:
+          type: string
+          enum:
+          - updateOne
+          - updateMany
+  responses:
+    UnauthorizedError:
+      description: Unauthorized access error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            message: Unauthorized
+            code: 401
+    NotFoundError:
+      description: Resource not found error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            message: Resource not found
+            code: 404
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              details:
+                type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: swagger_server.controllers.authorization_controller.check_bearerAuth
+
